@@ -1,8 +1,18 @@
-const WebSocketServer = require('ws').Server
+var WebSocketServer = require("ws").Server
+var http = require("http")
+var express = require("express")
+var app = express()
+var port = process.env.PORT || 5000
 
-const port = process.env.PORT || 8080;
+app.use(express.static(__dirname + "/"))
 
-const wss = new WebSocketServer({port:port})
+var server = http.createServer(app)
+server.listen(port)
+
+console.log("http server listening on %d", port)
+
+var wss = new WebSocketServer({server: server})
+console.log("websocket server created")
 
 
 let clients = []
@@ -13,9 +23,13 @@ wss.on('connection', (connection) => {
         username:'admin',
         message:'A USER HAS ENTERED ROOM'
     })
+
+
+    console.log("websocket connection open")
     
     connection.on('message', (message) => {
         const data = JSON.parse(message)
+        console.log(data)
         broadcast(data)
     })
 })

@@ -8,12 +8,15 @@ class MessagingPanel extends React.Component{
         messages:[]
     }
 
-    port = process.env.PORT || 8080;
+   
 
-    connection = new WebSocket(`ws://localhost:${this.port}`)
+    connection = new WebSocket(window.location.origin.replace(/^http/, 'ws'))
+    
 
     componentDidMount(){
+        console.log(this.connection)
         this.connection.onmessage = (message) =>{
+            console.log(message)
             const data = JSON.parse(message.data)
             this.setState({
                 messages:[...this.state.messages, data]
@@ -27,7 +30,9 @@ class MessagingPanel extends React.Component{
             username:this.props.username,
             message:message
         }
-        this.connection.send(JSON.stringify(data))
+        this.connection.onopen = () => {
+            this.connection.send(JSON.stringify(data))
+        }
     }
     render(){
         return(

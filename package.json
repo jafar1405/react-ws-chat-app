@@ -5,9 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server":"npm run start --prefix socket",
-    "client":"npm run start --prefix frontend",
-    "dev":"concurrently \"npm run server\" \"npm run client\""
+    "server": "npm run start --prefix socket",
+    "client": "npm run start --prefix frontend",
+    "start": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "engines": {
+    "node": "v10.15.3"
   },
   "author": "",
   "license": "ISC",
