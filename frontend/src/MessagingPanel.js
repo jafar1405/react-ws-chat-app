@@ -8,7 +8,7 @@ class MessagingPanel extends React.Component{
         messages:[]
     }
 
-    port = process.env.PORT || 9999;
+    port = process.env.PORT || 8080;
 
     connection = new WebSocket(`ws://localhost:${this.port}`)
 
